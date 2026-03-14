@@ -5,9 +5,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const GW = process.env.GATEWAY_IP || '192.168.12.1';
+// GATEWAY_IP can be the gateway directly (192.168.12.1) or a relay (10.x.x.x:3334)
+const GW_RAW = process.env.GATEWAY_IP || '192.168.12.1';
+const GW_HOST = GW_RAW.includes(':') ? GW_RAW.split(':')[0] : GW_RAW;
+const GW_PORT = GW_RAW.includes(':') ? parseInt(GW_RAW.split(':')[1]) : 80;
 const DASH_PASS = process.env.DASHBOARD_PASSWORD || 'admin';
 const GW_PASS = process.env.GATEWAY_PASSWORD || '';
+const RELAY_SECRET = process.env.RELAY_SECRET || '';
 const SESSION_SECRET = crypto.randomBytes(32).toString('hex');
 
 app.use(express.urlencoded({ extended: true }));
@@ -63,11 +67,11 @@ app.get('/api/config', (req, res) => {
 // Static files (protected)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Proxy /TMI to gateway
+// Proxy /TMI to gateway (directly or through relay)
 app.use('/TMI', (req, res) => {
   const options = {
-    hostname: GW,
-    port: 80,
+    hostname: GW_HOST,
+    port: GW_PORT,
     path: '/TMI' + req.url,
     method: req.method,
     headers: {}
@@ -76,6 +80,7 @@ app.use('/TMI', (req, res) => {
   if (req.headers['content-type']) options.headers['Content-Type'] = req.headers['content-type'];
   if (req.headers['authorization']) options.headers['Authorization'] = req.headers['authorization'];
   options.headers['Accept'] = 'application/json';
+  if (RELAY_SECRET) options.headers['x-relay-secret'] = RELAY_SECRET;
 
   const proxy = http.request(options, (gwRes) => {
     res.status(gwRes.statusCode);
@@ -98,6 +103,7 @@ const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
   console.log(`T-Mobile Dashboard running at http://localhost:${PORT}`);
   console.log(`Dashboard password: ${DASH_PASS === 'admin' ? 'admin (set DASHBOARD_PASSWORD env var to change)' : '(set via env)'}`);
+  console.log(`Gateway target: ${GW_HOST}:${GW_PORT}${RELAY_SECRET ? ' (with relay secret)' : ''}`);
   if (!GW_PASS) console.log('WARNING: GATEWAY_PASSWORD not set — gateway auth will fail');
 });
 
