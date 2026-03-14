@@ -145,7 +145,7 @@ function loginHTML(error) {
 <div class="card">
   <h1>Gateway Dashboard</h1>
   <div class="sub">T-Mobile 5G Home Internet</div>
-  \${error ? '<div class="err">// INCORRECT PASSWORD</div>' : ''}
+  ${error ? '<div class="err">// INCORRECT PASSWORD</div>' : ''}
   <form method="POST" action="/login">
     <label>Password</label>
     <input type="password" name="password" placeholder="Enter dashboard password..." autofocus required>
