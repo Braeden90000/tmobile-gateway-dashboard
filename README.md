@@ -11,27 +11,27 @@ Tested on the **Arcadyan TMO-G5AR** — should work on other T-Mobile gateways u
 ### Signal Monitor
 Real-time 5G signal quality gauge, RSRP/SINR/RSRQ/RSSI metrics, rolling signal history chart, and gateway latency monitor.
 
-![Signal Monitor](https://cdn.ix9.ca/f/6GCGYoaV.png)
+<img src="https://cdn.ix9.ca/f/qBNaw5lQ.png" alt="Signal Monitor" width="100%">
 
 ### WiFi Network Configuration
 Edit your primary SSID, password, encryption, and radio band toggles. Full SSID manager supports up to 4 networks with per-band assignment and guest isolation.
 
-![Network Config](https://cdn.ix9.ca/f/3-DNLC8W.png)
+<img src="https://cdn.ix9.ca/f/G9cG4N8E.png" alt="Network Config" width="100%">
 
 ### Connected Clients
 Live table of all connected devices across ethernet, WiFi 2.4/5/6 GHz — with IP, MAC, signal strength, and online/offline status. Alerts when new devices join.
 
-![Connected Clients](https://cdn.ix9.ca/f/rfx3_BHE.png)
+<img src="https://cdn.ix9.ca/f/rfx3_BHE.png" alt="Connected Clients" width="100%">
 
 ### Speed Test
 15-second multi-stream download test via Cloudflare CDN with live-updating gauge, latency measurement, and test history.
 
-![Speed Test](https://cdn.ix9.ca/f/G9cG4N8E.png)
+<img src="https://cdn.ix9.ca/f/3-DNLC8W.png" alt="Speed Test" width="100%">
 
 ### System Info
 Cell tower details with clickable GPS coordinates (opens Google Maps), gateway hardware info, SIM/IMEI details, uptime, and remote reboot.
 
-![System Info](https://cdn.ix9.ca/f/qBNaw5lQ.png)
+<img src="https://cdn.ix9.ca/f/6GCGYoaV.png" alt="System Info" width="100%">
 
 ---
 
